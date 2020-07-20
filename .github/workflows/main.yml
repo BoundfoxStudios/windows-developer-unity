@@ -28,7 +28,7 @@ jobs:
           targetPlatform: WebGL
 
       - name: Artifact upload
-        uses: actions/upload-artifactV2
+        uses: actions/upload-artifact@v2
         with:
           name: build
           path: Build
