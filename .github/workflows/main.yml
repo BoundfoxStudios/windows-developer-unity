@@ -27,8 +27,9 @@ jobs:
           unityVersion: 2019.4.4f1
           targetPlatform: WebGL
 
-      - name: Artifact upload
-        uses: actions/upload-artifact@v2
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@3.5.8
         with:
-          name: build
-          path: Build
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: build
