@@ -1,5 +1,7 @@
 # Windows Developer Unity: "Heim-Computermuseum"
 
+![Unity: 2019.4.4f1](https://img.shields.io/badge/Unity-2019.4.4f1-blue)
+
 Dieses Repository enthält das Beispielprojekt "Computermuseum" für die Windows Developer Artikelserie zu Unity.
 
 ## Assets
