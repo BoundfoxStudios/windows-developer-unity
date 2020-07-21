@@ -1,25 +1,88 @@
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | Computermuseum</title>
-    <link rel="shortcut icon" href="TemplateData/favicon.ico">
-    <link rel="stylesheet" href="TemplateData/style.css">
-    <script src="TemplateData/UnityProgress.js"></script>
-    <script src="Build/UnityLoader.js"></script>
-    <script>
-      var unityInstance = UnityLoader.instantiate("unityContainer", "Build/WebGL.json", {onProgress: UnityProgress});
-    </script>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Computermuseum</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="style.css" />
   </head>
+  
   <body>
-    <div class="webgl-content">
-      <div id="unityContainer" style="width: 960px; height: 600px"></div>
-      <div class="footer">
-        <div class="webgl-logo"></div>
-        <div class="fullscreen" onclick="unityInstance.SetFullscreen(1)"></div>
-        <div class="title">Computermuseum</div>
-      </div>
+    <header>
+      <img src="logo.png" />
+    </header>
+
+    <div id="unityContainer" style="width: 960px; height: 600px; position: relative;">
+      <div class="progress">Loading...</div>
     </div>
+
+    <footer>
+      <a href="https://boundfoxstudios.com" target="_blank" class="hvr-underline-from-center">Made with &hearts; by Boundfox Studios.</a>
+    </footer>
+
+    <script>
+      function startUnity() {
+        UnityLoader.instantiate('unityContainer', 'Build/Build.json', { onProgress: unityLoadProgress });
+      }
+
+      let intervalId;
+      let progressBar;
+      
+      function initializeSpinner(container) {
+        if (!document.fonts.check('10px C64')) {
+          return;
+        }
+
+         // PacMan loading indicator
+          const pacManCharacters = ['Ë', 'Î', 'Ì', 'Í'];
+          let pacManIndex = 0;
+          
+          const pacManElement = document.createElement('div');
+          pacManElement.className = 'spinner';
+          pacManElement.innerText = pacManCharacters[pacManIndex];
+
+          intervalId = setInterval(() => {
+            pacManIndex = (pacManIndex + 1) % pacManCharacters.length;
+            pacManElement.innerText = pacManCharacters[pacManIndex];            
+          }, 250);
+
+          container.insertBefore(pacManElement, container.firstChild);
+      }
+      
+      function unityLoadProgress(instance, progress) {
+        if (!instance.Module) {
+          return;
+        }
+
+        if (!instance.progressContainer) {
+          instance.progressContainer = document.createElement('div');
+          instance.progressContainer.className = `progress ${instance.Module.splashScreenStyle}`;
+          
+          const spinnerContainer = document.createElement('div');
+          spinnerContainer.className = 'spinner-container';
+          spinnerContainer.innerText = 'Loading...';
+          instance.progressContainer.appendChild(spinnerContainer);
+
+          progressBar = document.createElement('progress');
+          progressBar.setAttribute('max', 1);
+          instance.progressContainer.appendChild(progressBar);
+
+          instance.container.appendChild(instance.progressContainer);
+
+          document.fonts.ready.then(() => initializeSpinner(spinnerContainer));
+        }
+
+        if (progress == 1) {
+          clearInterval(intervalId);
+          instance.container.removeChild(instance.progressContainer);
+        }
+
+        if (progressBar) {
+          progressBar.setAttribute('value', progress);
+        }
+      }
+    </script>
+    <script src="Build/UnityLoader.js" onload="startUnity()"></script>
   </body>
 </html>
