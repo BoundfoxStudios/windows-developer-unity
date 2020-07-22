@@ -47,7 +47,7 @@
       let unityInstance;
 
       function startUnity() {
-        unityInstance = UnityLoader.instantiate('unityContainer', 'Build/WebGL.json', { onProgress: unityLoadProgress });
+        unityInstance = UnityLoader.instantiate('unityContainer', '%UNITY_WEBGL_BUILD_URL%', { onProgress: unityLoadProgress });
       }
 
       let intervalId;
