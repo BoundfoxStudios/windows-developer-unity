@@ -5,7 +5,7 @@
 
 @font-face {
   font-family: C64;
-  src: url('Commodore-64-v6.3.TTF') format('truetype');
+  src: url('../fonts/Commodore-64-v6.3.TTF') format('truetype');
 }
 
 * {
@@ -38,11 +38,18 @@ header img {
 }
 
 footer {
-  margin-top: auto;
-  margin-bottom: 0.5rem;
+  margin: 1rem auto 0.5rem auto;
   text-align: center;
   font-size: 0.8rem;
-  padding-top: 1rem;
+}
+
+footer .actions {
+  margin-bottom: 1rem;
+  font-size: 36px;
+}
+
+footer .actions:not([href]) {
+  cursor: pointer;
 }
 
 a {
@@ -91,6 +98,13 @@ a {
 .spinner-container .spinner {
   font-size: 3rem;
   margin-right: 1.5rem;
+}
+
+#unityContainer {
+  /* Values are only used for dev */
+  width: 900px;
+  height: 680px;
+  border: 1px solid black;
 }
 
 /* From hover.css - https://github.com/IanLunn/Hover */
