@@ -19,10 +19,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: Library
-          key: Library
+          key: Library-2020.1.4f1
 
       - name: Build WebGL
-        uses: webbertakken/unity-builder@v1.1
+        uses: webbertakken/unity-builder@v1.2
         with:
           unityVersion: 2020.1.4f1
           targetPlatform: WebGL
