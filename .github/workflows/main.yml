@@ -24,7 +24,7 @@ jobs:
       - name: Build WebGL
         uses: webbertakken/unity-builder@v1.1
         with:
-          unityVersion: 2019.4.4f1
+          unityVersion: 2020.1.4f1
           targetPlatform: WebGL
 
       - name: Deploy 🚀
