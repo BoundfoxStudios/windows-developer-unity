@@ -5,7 +5,10 @@ on:
     branches: [ main ]
 
 env:
-  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+  UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+  UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+  UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+    
 
 jobs:
   build:
@@ -22,7 +25,7 @@ jobs:
           key: Library-2020.1.8f1
 
       - name: Build WebGL
-        uses: webbertakken/unity-builder@v1.2
+        uses: webbertakken/unity-builder@v1.4
         with:
           unityVersion: 2020.1.8f1
           targetPlatform: WebGL
