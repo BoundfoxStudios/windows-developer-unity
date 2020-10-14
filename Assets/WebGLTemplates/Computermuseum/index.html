@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8"/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>%UNITY_WEB_NAME%</title>
+    <title>{{{ PRODUCT_NAME }}}</title>
     <link rel="icon" type="image/png" href="favicon.png"/>
     <link rel="stylesheet" href="styles/style.css"/>
     <link rel="stylesheet" href="styles/fontawesome.min.css"/>
@@ -16,13 +16,19 @@
       <img src="logo.png"/>
     </header>
 
-    <div id="unityContainer" style="width: %UNITY_WIDTH%px; height: %UNITY_HEIGHT%px; position: relative;">
-      <div class="progress">Loading...</div>
+    <div id="unity-container" class="unity-desktop">
+      <canvas id="unity-canvas"></canvas>
+      <div id="unity-loading-bar">
+        <div class="progress">
+          <div class="spinner-container">Loading...</div>
+          <progress max="1"></progress>
+        </div>
+      </div>
     </div>
 
     <footer>
       <div class="actions">
-        <a title="Fullscreen" onclick="goFullscreen(); return false;">
+        <a title="Fullscreen" id="unity-fullscreen-button">
           <i class="fas fa-expand"></i>
         </a>
         <a href="https://github.com/boundfoxstudios/windows-developer-unity" target="_blank">
@@ -44,14 +50,67 @@
     </footer>
 
     <script>
-      let unityInstance;
+      // @formatter:off
+      const buildUrl = "Build";
+      const loaderUrl = buildUrl + "/{{{ LOADER_FILENAME }}}";
+      const config = {
+        dataUrl: buildUrl + "/{{{ DATA_FILENAME }}}",
+        frameworkUrl: buildUrl + "/{{{ FRAMEWORK_FILENAME }}}",
+        codeUrl: buildUrl + "/{{{ CODE_FILENAME }}}",
+#if MEMORY_FILENAME
+      memoryUrl: buildUrl + "/{{{ MEMORY_FILENAME }}}",
+#endif
+#if SYMBOLS_FILENAME
+      symbolsUrl: buildUrl + "/{{{ SYMBOLS_FILENAME }}}",
+#endif
+      streamingAssetsUrl: "StreamingAssets",
+          companyName: "{{{ COMPANY_NAME }}}",
+          productName: "{{{ PRODUCT_NAME }}}",
+          productVersion: "{{{ PRODUCT_VERSION }}}",
+      };
+      // @formatter:off
 
-      function startUnity() {
-        unityInstance = UnityLoader.instantiate('unityContainer', '%UNITY_WEBGL_BUILD_URL%', { onProgress: unityLoadProgress });
+
+      const container = document.querySelector('#unity-container');
+      const canvas = document.querySelector('#unity-canvas');
+      const loadingBar = document.querySelector('#unity-loading-bar');
+      const progressBar = document.querySelector('progress');
+      const fullscreenButton = document.querySelector('#unity-fullscreen-button');
+      const spinnerContainer = document.querySelector('.spinner-container');
+
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        container.className = 'unity-mobile';
+        config.devicePixelRatio = 1;
+      } else {
+        canvas.style.width = '{{{ WIDTH }}}px';
+        canvas.style.height = '{{{ HEIGHT }}}px';
       }
 
+      // @formatter:off
+#if BACKGROUND_FILENAME
+      canvas.style.background = "url('" + buildUrl + "/{{{ BACKGROUND_FILENAME.replace(/'/g, '%27') }}}') center / cover";
+#endif
+      loadingBar.style.display = "block";
+      // @formatter:on
+
+      const script = document.createElement('script');
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          progressBar.setAttribute('value', progress);
+        }).then((unityInstance) => {
+          clearInterval(intervalId);
+          container.removeChild(loadingBar);
+          fullscreenButton.onclick = () => {
+            unityInstance.SetFullscreen(1);
+          };
+        }).catch((message) => {
+          alert(message);
+        });
+      };
+      document.body.appendChild(script);
+
       let intervalId;
-      let progressBar;
 
       function initializeSpinner(container) {
         if (!document.fonts.check('10px C64')) {
@@ -66,6 +125,8 @@
         pacManElement.className = 'spinner';
         pacManElement.innerText = pacManCharacters[pacManIndex];
 
+        console.log('setting interval...');
+
         intervalId = setInterval(() => {
           pacManIndex = (pacManIndex + 1) % pacManCharacters.length;
           pacManElement.innerText = pacManCharacters[pacManIndex];
@@ -74,47 +135,7 @@
         container.insertBefore(pacManElement, container.firstChild);
       }
 
-      function unityLoadProgress(instance, progress) {
-        if (!instance.Module) {
-          return;
-        }
-
-        if (!instance.progressContainer) {
-          instance.progressContainer = document.createElement('div');
-          instance.progressContainer.className = `progress ${instance.Module.splashScreenStyle}`;
-
-          const spinnerContainer = document.createElement('div');
-          spinnerContainer.className = 'spinner-container';
-          spinnerContainer.innerText = 'Loading...';
-          instance.progressContainer.appendChild(spinnerContainer);
-
-          progressBar = document.createElement('progress');
-          progressBar.setAttribute('max', '1');
-          instance.progressContainer.appendChild(progressBar);
-
-          instance.container.appendChild(instance.progressContainer);
-
-          document.fonts.ready.then(() => initializeSpinner(spinnerContainer));
-        }
-
-        if (progress === 1) {
-          clearInterval(intervalId);
-          instance.container.removeChild(instance.progressContainer);
-        }
-
-        if (progressBar) {
-          progressBar.setAttribute('value', progress);
-        }
-      }
-
-      function goFullscreen() {
-        if (!unityInstance) {
-          return;
-        }
-
-        unityInstance.SetFullscreen(1);
-      }
+      document.fonts.ready.then(() => initializeSpinner(spinnerContainer));
     </script>
-    <script src="%UNITY_WEBGL_LOADER_URL%" onload="startUnity()"></script>
   </body>
 </html>
