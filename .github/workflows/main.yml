@@ -29,7 +29,6 @@ jobs:
         with:
           unityVersion: 2020.1.8f1
           targetPlatform: WebGL
-          customParameters: '-nographics'
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.6.2
