@@ -100,10 +100,11 @@ a {
   margin-right: 1.5rem;
 }
 
-#unityContainer {
-  /* Values are only used for dev */
-  width: 900px;
-  height: 680px;
+#unity-container {
+  position: relative;
+}
+
+#unity-canvas {
   border: 1px solid black;
 }
 
