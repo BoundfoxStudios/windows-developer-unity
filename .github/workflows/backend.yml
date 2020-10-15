@@ -20,7 +20,7 @@ jobs:
       - name: Push images
         run: |
           docker tag boundfoxstudios/computermuseum-api:$GITHUB_RUN_NUMBER registry.heroku.com/computermuseum-api/web
-          docker push registry.heroku.com/computermuseum-web/web
+          docker push registry.heroku.com/computermuseum-api/web
       - name: Release images
         env:
           HEROKU_API_KEY: "${{ secrets.HEROKU_API_TOKEN }}"

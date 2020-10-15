@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoundfoxStudios.Computermuseum.WebApi", "BoundfoxStudios.Computermuseum.WebApi\BoundfoxStudios.Computermuseum.WebApi.csproj", "{198A7F2A-00A6-40AF-B6DD-7FBD77E8D351}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CI", "CI", "{4910CAD4-B811-42C6-A6B8-28E3AE33F556}"
+ProjectSection(SolutionItems) = preProject
+	..\.github\workflows\main.yml = ..\.github\workflows\main.yml
+	..\.github\workflows\backend.yml = ..\.github\workflows\backend.yml
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Additional Files", "Additional Files", "{E1B11575-6342-4EA9-96D9-7E02C969EFAF}"
+ProjectSection(SolutionItems) = preProject
+	.gitignore = .gitignore
+EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{198A7F2A-00A6-40AF-B6DD-7FBD77E8D351}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{198A7F2A-00A6-40AF-B6DD-7FBD77E8D351}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{198A7F2A-00A6-40AF-B6DD-7FBD77E8D351}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{198A7F2A-00A6-40AF-B6DD-7FBD77E8D351}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
