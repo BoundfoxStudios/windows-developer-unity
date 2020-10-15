@@ -15,7 +15,8 @@ jobs:
         HEROKU_USER_NAME: "${{ secrets.HEROKU_USER_NAME }}"
       run: bash -c 'echo ${{ secrets.HEROKU_API_TOKEN }} | docker login -u $HEROKU_USER_NAME --password-stdin registry.heroku.com'
     - name: Build API
-      run: docker build . --tag boundfoxstudios/computermuseum-api:$GITHUB_RUN_NUMBER --file Backend/BoundfoxStudios.Computermuseum.WebApi/Dockerfile
+      run: docker build . --tag boundfoxstudios/computermuseum-api:$GITHUB_RUN_NUMBER --file BoundfoxStudios.Computermuseum.WebApi/Dockerfile
+      working-directory: Backend
     - name: Push images
       run: |
         docker tag boundfoxstudios/computermuseum-api:$GITHUB_RUN_NUMBER registry.heroku.com/computermuseum-api/web
