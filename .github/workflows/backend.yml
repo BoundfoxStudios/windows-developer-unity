@@ -8,22 +8,22 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-    - name: Heroku Login
-      env: 
-        HEROKU_USER_NAME: "${{ secrets.HEROKU_USER_NAME }}"
-      run: bash -c 'echo ${{ secrets.HEROKU_API_TOKEN }} | docker login -u $HEROKU_USER_NAME --password-stdin registry.heroku.com'
-    - name: Build API
-      run: docker build . --tag boundfoxstudios/computermuseum-api:$GITHUB_RUN_NUMBER
-      working-directory: Backend/BoundfoxStudios.Computermuseum.WebApi
-    - name: Push images
-      run: |
-        docker tag boundfoxstudios/computermuseum-api:$GITHUB_RUN_NUMBER registry.heroku.com/computermuseum-api/web
-        docker push registry.heroku.com/computermuseum-web/web
-    - name: Release images
-      env:
-        HEROKU_API_KEY: "${{ secrets.HEROKU_API_TOKEN }}"
-      run: |
-        heroku container:login
-        heroku container:release -a computermuseum-api web
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Heroku Login
+        env: 
+          HEROKU_USER_NAME: "${{ secrets.HEROKU_USER_NAME }}"
+        run: bash -c 'echo ${{ secrets.HEROKU_API_TOKEN }} | docker login -u $HEROKU_USER_NAME --password-stdin registry.heroku.com'
+      - name: Build API
+        run: docker build . --tag boundfoxstudios/computermuseum-api:$GITHUB_RUN_NUMBER
+        working-directory: Backend/BoundfoxStudios.Computermuseum.WebApi
+      - name: Push images
+        run: |
+          docker tag boundfoxstudios/computermuseum-api:$GITHUB_RUN_NUMBER registry.heroku.com/computermuseum-api/web
+          docker push registry.heroku.com/computermuseum-web/web
+      - name: Release images
+        env:
+          HEROKU_API_KEY: "${{ secrets.HEROKU_API_TOKEN }}"
+        run: |
+          heroku container:login
+          heroku container:release -a computermuseum-api web
