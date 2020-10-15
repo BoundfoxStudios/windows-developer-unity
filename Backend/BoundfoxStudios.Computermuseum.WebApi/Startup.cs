@@ -1,4 +1,5 @@
 using BoundfoxStudios.Computermuseum.WebApi.Data;
+using BoundfoxStudios.Computermuseum.WebApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,9 @@ namespace BoundfoxStudios.Computermuseum.WebApi
     {
       services.AddDbContext<MuseumDbContext>(config => config.UseInMemoryDatabase("MuseumDb"));
       services.AddControllers();
+
+      services.AddTransient<DataInitializer>();
+      services.AddTransient<InformationService>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -31,6 +35,12 @@ namespace BoundfoxStudios.Computermuseum.WebApi
       {
         app.UseDeveloperExceptionPage();
       }
+
+      app.UseCors(corsBuilder => corsBuilder
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .SetIsOriginAllowed(_ => true)
+      );
 
       app.UseHttpsRedirection();
 
