@@ -12,4 +12,5 @@ RUN dotnet publish -c Release -o out
 FROM mcr.microsoft.com/dotnet/aspnet:5.0.0-rc.2-alpine3.12-amd64
 WORKDIR /app
 COPY --from=build-env /app/out .
-ENTRYPOINT ["dotnet", "BoundfoxStudios.Computermuseum.WebApi.dll"]
+
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet BoundfoxStudios.Computermuseum.WebApi.dll
