@@ -2,10 +2,10 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0.100-rc.2-alpine3.12-amd64 AS build-env
 WORKDIR /app
 
-COPY *.csproj ./
+COPY Backend/BoundfoxStudios.Computermuseum.WebApi/*.csproj ./
 RUN dotnet restore
 
-COPY . ./
+COPY Backend/BoundfoxStudios.Computermuseum.WebApi ./
 RUN dotnet publish -c Release -o out
 
 # Build runtime image
