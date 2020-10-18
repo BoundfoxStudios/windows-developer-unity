@@ -33,24 +33,25 @@ namespace BoundfoxStudios.Computermuseum
       }
 
       RotateObject();
+    }
 
-      if (Input.GetKeyDown(KeyCode.F))
+    public void Settle(Action done)
+    {
+      _processControls = false;
+
+      foreach (var additionalControl in AdditionalControls)
       {
-        _processControls = false;
-
-        foreach (var additionalControl in AdditionalControls)
-        {
-          additionalControl.enabled = false;
-        }
-
-        StartCoroutine(Lift(() =>
-        {
-          MuseumObject.transform.position = _initialPosition;
-          MuseumObject.transform.rotation = _initialRotation;
-          enabled = false;
-          _playerController.enabled = true;
-        }));
+        additionalControl.enabled = false;
       }
+
+      StartCoroutine(Lift(() =>
+      {
+        MuseumObject.transform.position = _initialPosition;
+        MuseumObject.transform.rotation = _initialRotation;
+        enabled = false;
+        _playerController.enabled = true;
+        done?.Invoke();
+      }));
     }
 
     private void OnEnable()
@@ -87,7 +88,7 @@ namespace BoundfoxStudios.Computermuseum
       var t = 0f;
       var startPosition = MuseumObject.transform.position;
       var endPosition = _initialPosition;
-      
+
       if (amount.HasValue)
       {
         endPosition += new Vector3(0, amount.Value, 0);
@@ -95,7 +96,7 @@ namespace BoundfoxStudios.Computermuseum
 
       var startRotation = MuseumObject.transform.rotation;
       var endRotation = _initialRotation;
-      
+
       while (t < 1)
       {
         var calculatedPosition = Vector3.Lerp(startPosition, endPosition, t / TimeToLift);
@@ -108,7 +109,7 @@ namespace BoundfoxStudios.Computermuseum
 
         yield return null;
       }
-      
+
       done?.Invoke();
     }
   }
