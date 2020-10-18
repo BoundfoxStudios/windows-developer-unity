@@ -22,12 +22,7 @@ namespace BoundfoxStudios.Computermuseum.WebApi
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddDbContext<MuseumDbContext>(config => config.UseInMemoryDatabase("MuseumDb"));
-      services.AddControllers()
-        .AddJsonOptions(jsonOptions =>
-        {
-          jsonOptions.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
-          jsonOptions.JsonSerializerOptions.PropertyNamingPolicy = null;
-        });
+      services.AddControllers();
 
       services.AddTransient<DataInitializer>();
       services.AddTransient<InformationService>();
