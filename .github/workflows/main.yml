@@ -25,7 +25,7 @@ jobs:
           key: Library-2020.1.8f1
 
       - name: Build WebGL
-        uses: webbertakken/unity-builder@v1.2
+        uses: webbertakken/unity-builder@v1.4
         with:
           unityVersion: 2020.1.8f1
           targetPlatform: WebGL
