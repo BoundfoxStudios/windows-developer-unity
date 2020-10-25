@@ -92,7 +92,7 @@ namespace BoundfoxStudios.Computermuseum
       var tab = Instantiate(TabPrefab, TabContainer.transform);
 
       var buttonText = button.GetComponentInChildren<TextMeshProUGUI>();
-      buttonText.text = $"({index}) {page.Title}";
+      buttonText.text = $"({index + 1}) {page.Title}";
 
       var tabText = tab.GetComponent<TextMeshProUGUI>();
       tabText.text = page.Description;

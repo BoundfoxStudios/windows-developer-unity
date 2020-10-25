@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BoundfoxStudios.Computermuseum.WebApi.Data;
 using BoundfoxStudios.Computermuseum.WebApi.Data.Models;
@@ -19,6 +21,13 @@ namespace BoundfoxStudios.Computermuseum.WebApi.Services
       return await _context.MuseumItems
         .Include(item => item.InformationPages)
         .SingleOrDefaultAsync(item => item.IdName == idName);
+    }
+
+    public async Task<IEnumerable<string>> GetAvailableMuseumItemsAsync()
+    {
+      return await _context.MuseumItems
+        .Select(item => item.IdName)
+        .ToArrayAsync();
     }
   }
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BoundfoxStudios.Computermuseum.WebApi</name>
+    </assembly>
+    <members>
+        <member name="M:BoundfoxStudios.Computermuseum.WebApi.Controllers.InformationController.GetAvailableMuseumItemsAsync">
+            <summary>
+            Returns a list of the available museums items.
+            </summary>
+        </member>
+        <member name="M:BoundfoxStudios.Computermuseum.WebApi.Controllers.InformationController.GetInformationAsync(System.String)">
+            <summary>
+            Return specific information for a single museum item.
+            </summary>
+            <param name="idName">The id of the museum item.</param>
+        </member>
+        <member name="T:BoundfoxStudios.Computermuseum.WebApi.Data.Models.InformationPage">
+            <summary>
+            Describes an information page for a museum item, so the information can be split across multiple pages.
+            </summary>
+        </member>
+        <member name="T:BoundfoxStudios.Computermuseum.WebApi.Data.Models.MuseumItem">
+            <summary>
+            Represents an item in the museum, e.g. the C64.
+            </summary>
+        </member>
+    </members>
+</doc>
